@@ -190,6 +190,13 @@ view spectogram at high freq, 20000 - strong signals which look like morse!
 Zooming in, discovering a binary pattern every 0.06secs - signal presence means 1, 0 otherwise.  
 decoded the binary to the flag.  
 
+# Stego 200 - Little Things Matter the Most
+https://29a.ch/photo-forensics/#luminance-gradient. 
+Discover the hidden qr code.  
+Post process the image to get a clearer qrcode.  
+I also used this website i think its great. 
+https://merri.cx/qrazybox/  
+
 # Stego 300 - Public Lies Private Truths
 /encode_grid.js reveals 38 divs. Makes sense that each one is char in the flag.  
 Upon inspecting the brightness and opacity, i found a logic.  
