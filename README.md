@@ -183,7 +183,32 @@ Ida reveals python code packed into executable.
 2. use pycdc to decompile pyc into py sourcecode.  
 3. manual deobfuscation  
 4. pyarmor deobfuscation  
-5. manual deobfuscation
+5. manual deobfuscation, Final stage script:
+```python
+from Crypto.Cipher import AES
+
+def xor_42(param1):
+    return ''.join(chr(A ^ 42) for A in param1)
+
+def rev_shift(letter, key):
+    return (letter >> key) | (letter << (8 - key)) & 255
+
+def rev_shift_all(text, key, iv):
+    C = bytearray()
+    for (index, letter) in enumerate(text):
+        H = (key[index % len(key)] + iv[index % len(iv)]) % 8
+        C.append(rev_shift(letter, H))
+    return C
+
+def decrypt(ciphertext, key, iv):
+    A = AES.new(key, AES.MODE_CBC, iv)
+    return A.decrypt(ciphertext)
+
+encrypted_flag = 'fa21c9c2596099915dbc7845c941c14e81594b5c4f69177cc4059da11e782e0b'
+key = bytes.fromhex('504f43544632303234').ljust(16, b'\x00')
+iv = bytes.fromhex('437261636b3430302d58'.ljust(32, '0'))
+print(xor_42(rev_shift_all(decrypt(bytes.fromhex(encrypted_flag), key, iv), key, iv)))
+```
 
 # Stego 200 - You Never Liked My Music
 view spectogram at high freq, 20000 - strong signals which look like morse!  
